@@ -1,5 +1,5 @@
-name: flutter_counter_app
-description: A Flutter counter application
+name: animation_showcase
+description: A Flutter/Dart animation showcase with multiple custom animations and Lottie integration
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
+  lottie: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -18,3 +19,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/background.json
+    - assets/cat.json
+    - assets/loading.json
+    - assets/sample.json

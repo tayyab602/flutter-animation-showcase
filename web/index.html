@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animation Showcase</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #13131a;
+      --bg-card-hover: #1a1a24;
+      --text: #e8e6f0;
+      --text-dim: #8a8698;
+      --accent: #7c5cfc;
+      --accent-glow: rgba(124, 92, 252, 0.3);
+      --accent2: #fc5c8c;
+      --accent3: #5cfcb6;
+      --accent4: #fcb85c;
+      --border: rgba(255,255,255,0.06);
+      --radius: 20px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── LOADING SCREEN ─── */
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    .loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    #loading-anim { width: 120px; height: 120px; }
+    .loading-text {
+      margin-top: 24px;
+      font-size: 14px;
+      color: var(--text-dim);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      animation: loadPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes loadPulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* ─── FLOATING PARTICLES BG ─── */
+    .particles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: floatParticle linear infinite;
+      opacity: 0;
+    }
+    @keyframes floatParticle {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-20vh) scale(1); opacity: 0; }
+    }
+
+    /* ─── NAVBAR ─── */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10, 10, 15, 0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transform: translateY(-100%);
+      animation: slideDown 0.8s ease 1.5s forwards;
+    }
+    @keyframes slideDown {
+      to { transform: translateY(0); }
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 18px;
+    }
+    .nav-brand .material-icons-round {
+      font-size: 28px;
+      color: var(--accent);
+      animation: spinSlow 8s linear infinite;
+    }
+    @keyframes spinSlow { to { transform: rotate(360deg); } }
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+      position: relative;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text);
+      background: rgba(124, 92, 252, 0.1);
+    }
+
+    /* ─── HERO SECTION ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 120px 32px 80px;
+      overflow: hidden;
+    }
+    .hero-bg-anim {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(900px, 90vw);
+      height: 400px;
+      opacity: 0.25;
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 100px;
+      background: rgba(124, 92, 252, 0.12);
+      border: 1px solid rgba(124, 92, 252, 0.25);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 1.8s forwards;
+    }
+    .hero-badge .dot-live {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent3);
+      animation: blink 2s ease infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    .hero h1 {
+      font-size: clamp(36px, 7vw, 72px);
+      font-weight: 900;
+      line-height: 1.08;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 2s forwards;
+    }
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent4));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200% 200%;
+      animation: gradientShift 4s ease infinite;
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--text-dim);
+      max-width: 520px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 2.2s forwards;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 2.4s forwards;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .btn {
+      padding: 14px 32px;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 24px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px var(--accent-glow);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.05);
+      border-color: rgba(255,255,255,0.15);
+      transform: translateY(-2px);
+    }
+
+    /* ─── SCROLL INDICATOR ─── */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 2.8s forwards;
+    }
+    .scroll-indicator span {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .scroll-mouse {
+      width: 24px;
+      height: 38px;
+      border: 2px solid var(--text-dim);
+      border-radius: 12px;
+      position: relative;
+    }
+    .scroll-mouse::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--accent);
+      animation: scrollBounce 2s ease infinite;
+    }
+    @keyframes scrollBounce {
+      0%, 100% { top: 6px; opacity: 1; }
+      50% { top: 18px; opacity: 0.3; }
+    }
+
+    /* ─── SECTION COMMON ─── */
+    section {
+      padding: 100px 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .section-tag {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 17px;
+      color: var(--text-dim);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ─── LOTTIE SHOWCASE GRID ─── */
+    .lottie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+    .lottie-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .lottie-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .lottie-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(124,92,252,0.3);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px var(--accent-glow);
+      background: var(--bg-card-hover);
+    }
+    .lottie-preview {
+      height: 240px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .lottie-preview::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, var(--bg-card) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .lottie-container {
+      width: 100%;
+      height: 100%;
+    }
+    .lottie-info {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+    }
+    .lottie-info h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .lottie-info p {
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .lottie-tags {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .tag-purple { background: rgba(124,92,252,0.15); color: var(--accent); }
+    .tag-pink { background: rgba(252,92,140,0.15); color: var(--accent2); }
+    .tag-green { background: rgba(92,252,182,0.15); color: var(--accent3); }
+    .tag-orange { background: rgba(252,184,92,0.15); color: var(--accent4); }
+
+    /* ─── CUSTOM ANIMATIONS SECTION ─── */
+    .custom-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .anim-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(40px);
+      position: relative;
+      overflow: hidden;
+    }
+    .anim-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .anim-card:hover {
+      border-color: rgba(124,92,252,0.3);
+      background: var(--bg-card-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.25);
+    }
+    .anim-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, var(--accent), transparent, transparent);
+      opacity: 0;
+      transition: opacity 0.5s;
+      animation: rotateBorder 4s linear infinite;
+    }
+    .anim-card:hover::before { opacity: 0.08; }
+    @keyframes rotateBorder { to { transform: rotate(360deg); } }
+    .anim-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      position: relative;
+      z-index: 1;
+    }
+    .anim-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    .anim-card p {
+      font-size: 13px;
+      color: var(--text-dim);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Individual animation demos */
+    .demo-bounce .anim-icon { animation: demoBounce 2s ease infinite; }
+    @keyframes demoBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+    .demo-pulse .anim-icon { animation: demoPulse 2s ease infinite; }
+    @keyframes demoPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 var(--accent-glow); }
+      50% { transform: scale(1.1); box-shadow: 0 0 30px 10px var(--accent-glow); }
+    }
+    .demo-spin .anim-icon { animation: demoSpin 3s linear infinite; }
+    @keyframes demoSpin { to { transform: rotate(360deg); } }
+    .demo-shake .anim-icon { animation: demoShake 2s ease infinite; }
+    @keyframes demoShake {
+      0%, 100% { transform: translateX(0) rotate(0deg); }
+      10% { transform: translateX(-6px) rotate(-5deg); }
+      20% { transform: translateX(6px) rotate(5deg); }
+      30% { transform: translateX(-4px) rotate(-3deg); }
+      40% { transform: translateX(4px) rotate(3deg); }
+      50% { transform: translateX(0) rotate(0deg); }
+    }
+    .demo-morph .anim-icon { animation: demoMorph 4s ease infinite; }
+    @keyframes demoMorph {
+      0%, 100% { border-radius: 20px; background: rgba(124,92,252,0.2); }
+      25% { border-radius: 50% 20px; background: rgba(252,92,140,0.2); }
+      50% { border-radius: 50%; background: rgba(92,252,182,0.2); }
+      75% { border-radius: 20px 50%; background: rgba(252,184,92,0.2); }
+    }
+    .demo-flip .anim-icon { animation: demoFlip 3s ease infinite; perspective: 600px; }
+    @keyframes demoFlip {
+      0%, 100% { transform: rotateY(0deg); }
+      50% { transform: rotateY(180deg); }
+    }
+    .demo-wave .anim-icon { animation: demoWave 2.5s ease infinite; }
+    @keyframes demoWave {
+      0%, 100% { transform: rotate(0deg); }
+      10% { transform: rotate(14deg); }
+      20% { transform: rotate(-8deg); }
+      30% { transform: rotate(14deg); }
+      40% { transform: rotate(-4deg); }
+      50% { transform: rotate(10deg); }
+      60%, 100% { transform: rotate(0deg); }
+    }
+    .demo-glow .anim-icon {
+      animation: demoGlow 3s ease infinite;
+    }
+    @keyframes demoGlow {
+      0%, 100% { box-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent), 0 0 20px var(--accent); }
+      50% { box-shadow: 0 0 20px var(--accent), 0 0 40px var(--accent), 0 0 80px var(--accent), 0 0 120px var(--accent2); }
+    }
+    .demo-slide .anim-icon { animation: demoSlide 3s ease infinite; }
+    @keyframes demoSlide {
+      0%, 100% { transform: translateX(0) scale(1); }
+      25% { transform: translateX(20px) scale(0.9); }
+      50% { transform: translateX(0) scale(1.1); }
+      75% { transform: translateX(-20px) scale(0.9); }
+    }
+    .demo-stagger .anim-icon { position: relative; }
+    .demo-stagger .stagger-dots {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      justify-content: center;
+    }
+    .stagger-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: staggerJump 1.4s ease infinite;
+    }
+    .stagger-dot:nth-child(2) { animation-delay: 0.15s; background: var(--accent2); }
+    .stagger-dot:nth-child(3) { animation-delay: 0.3s; background: var(--accent3); }
+    .stagger-dot:nth-child(4) { animation-delay: 0.45s; background: var(--accent4); }
+    @keyframes staggerJump {
+      0%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-18px); }
+    }
+    .demo-typewriter .typewriter-text {
+      font-family: 'Inter', monospace;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+      border-right: 3px solid var(--accent);
+      animation: blink-caret 0.75s step-end infinite;
+      white-space: nowrap;
+      overflow: hidden;
+      display: inline-block;
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent; }
+      50% { border-color: var(--accent); }
+    }
+    .demo-ripple .anim-icon { position: relative; }
+    .ripple-ring {
+      position: absolute;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      animation: rippleExpand 2s ease-out infinite;
+    }
+    .ripple-ring:nth-child(1) { width: 30px; height: 30px; }
+    .ripple-ring:nth-child(2) { width: 30px; height: 30px; animation-delay: 0.5s; }
+    .ripple-ring:nth-child(3) { width: 30px; height: 30px; animation-delay: 1s; }
+    @keyframes rippleExpand {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(3.5); opacity: 0; }
+    }
+
+    /* ─── INTERACTIVE PLAYGROUND ─── */
+    .playground {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .playground::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3), var(--accent4));
+      background-size: 300% 100%;
+      animation: gradientShift 4s ease infinite;
+    }
+    .playground-demo {
+      width: 120px;
+      height: 120px;
+      margin: 32px auto;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+      cursor: pointer;
+      user-select: none;
+    }
+    .playground-demo:hover {
+      transform: scale(1.1) rotate(5deg);
+    }
+    .playground-controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+    .ctrl-btn {
+      padding: 10px 20px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .ctrl-btn:hover {
+      background: rgba(124,92,252,0.1);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .ctrl-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* Playground animation classes */
+    .play-bounce { animation: playBounce 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite; }
+    @keyframes playBounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-40px) scale(1.1); }
+    }
+    .play-spin { animation: playSpin 1.5s linear infinite; }
+    @keyframes playSpin { to { transform: rotate(360deg); } }
+    .play-pulse { animation: playPulse 1.5s ease infinite; }
+    @keyframes playPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.7; }
+    }
+    .play-wobble { animation: playWobble 1s ease infinite; }
+    @keyframes playWobble {
+      0%, 100% { transform: rotate(0deg); }
+      15% { transform: rotate(-15deg); }
+      30% { transform: rotate(10deg); }
+      45% { transform: rotate(-10deg); }
+      60% { transform: rotate(6deg); }
+      75% { transform: rotate(-4deg); }
+    }
+    .play-jello { animation: playJello 2s ease infinite; }
+    @keyframes playJello {
+      0%, 100% { transform: skewX(0) skewY(0); }
+      30% { transform: skewX(-12.5deg) skewY(-12.5deg); }
+      40% { transform: skewX(6.25deg) skewY(6.25deg); }
+      50% { transform: skewX(-3.125deg) skewY(-3.125deg); }
+      65% { transform: skewX(1.5625deg) skewY(1.5625deg); }
+      75% { transform: skewX(-0.78deg) skewY(-0.78deg); }
+    }
+    .play-flip3d { animation: playFlip3d 2s ease infinite; perspective: 800px; }
+    @keyframes playFlip3d {
+      0% { transform: perspective(800px) rotateY(0) rotateX(0); }
+      25% { transform: perspective(800px) rotateY(180deg) rotateX(0); }
+      50% { transform: perspective(800px) rotateY(180deg) rotateX(180deg); }
+      75% { transform: perspective(800px) rotateY(0) rotateX(180deg); }
+      100% { transform: perspective(800px) rotateY(0) rotateX(0); }
+    }
+
+    /* ─── CAT SECTION ─── */
+    .cat-section {
+      text-align: center;
+    }
+    .cat-anim-wrapper {
+      max-width: 500px;
+      height: 250px;
+      margin: 0 auto;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .cat-anim-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      background: radial-gradient(ellipse at bottom, transparent 50%, var(--bg-card) 100%);
+      pointer-events: none;
+    }
+
+    /* ─── STATS BAR ─── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 32px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.5s ease;
+    }
+    .stat-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .stat-number {
+      font-size: 40px;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label {
+      font-size: 14px;
+      color: var(--text-dim);
+      margin-top: 4px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center;
+      padding: 48px 32px;
+      border-top: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 14px;
+    }
+    footer .heart {
+      color: var(--accent2);
+      display: inline-block;
+      animation: heartbeat 1.5s ease infinite;
+    }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.3); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.2); }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .navbar { padding: 12px 16px; }
+      .nav-links { display: none; }
+      section { padding: 60px 16px; }
+      .playground { padding: 32px 20px; }
+      .lottie-grid { grid-template-columns: 1fr; }
+      .custom-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <!-- LOADING SCREEN -->
+  <div class="loading-screen" id="loadingScreen">
+    <div id="loading-anim"></div>
+    <div class="loading-text">Loading Animations</div>
+  </div>
+
+  <!-- PARTICLES -->
+  <div class="particles" id="particles"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span class="material-icons-round">auto_awesome</span>
+      Animation Showcase
+    </div>
+    <ul class="nav-links">
+      <li><a href="#hero" class="active">Home</a></li>
+      <li><a href="#lottie">Lottie</a></li>
+      <li><a href="#custom">Custom</a></li>
+      <li><a href="#playground">Playground</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-anim" id="hero-bg-anim"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot-live"></span>
+        Flutter + Dart Animation Demo
+      </div>
+      <h1>Animations That<br><span class="gradient-text">Bring Apps to Life</span></h1>
+      <p class="hero-sub">A showcase of multiple custom animations — from smooth Lottie sequences to hand-crafted CSS transitions and interactive effects.</p>
+      <div class="hero-buttons">
+        <a href="#lottie" class="btn btn-primary">
+          <span class="material-icons-round" style="font-size:18px">play_circle</span>
+          Explore Animations
+        </a>
+        <a href="#playground" class="btn btn-ghost">
+          <span class="material-icons-round" style="font-size:18px">tune</span>
+          Interactive Demo
+        </a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-mouse"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section>
+    <div class="stats-bar">
+      <div class="stat-item"><div class="stat-number" data-count="4">0</div><div class="stat-label">Lottie Animations</div></div>
+      <div class="stat-item"><div class="stat-number" data-count="12">0</div><div class="stat-label">Custom Animations</div></div>
+      <div class="stat-item"><div class="stat-number" data-count="6">0</div><div class="stat-label">Interactive Effects</div></div>
+      <div class="stat-item"><div class="stat-number" data-count="60">0</div><div class="stat-label">FPS Smooth</div></div>
+    </div>
+  </section>
+
+  <!-- LOTTIE ANIMATIONS -->
+  <section id="lottie">
+    <div class="section-header">
+      <div class="section-tag">Lottie Animations</div>
+      <h2 class="section-title">Vector Motion Graphics</h2>
+      <p class="section-desc">High-fidelity animations rendered in real-time using Lottie, exported from After Effects.</p>
+    </div>
+    <div class="lottie-grid">
+      <div class="lottie-card">
+        <div class="lottie-preview"><div class="lottie-container" id="lottie-bg"></div></div>
+        <div class="lottie-info">
+          <h3>Hero Background Loop</h3>
+          <p>Seamless looping background animation with smooth vector transitions and parallax depth.</p>
+          <div class="lottie-tags">
+            <span class="tag tag-purple">Looping</span>
+            <span class="tag tag-green">60 FPS</span>
+          </div>
+        </div>
+      </div>
+      <div class="lottie-card">
+        <div class="lottie-preview"><div class="lottie-container" id="lottie-cat"></div></div>
+        <div class="lottie-info">
+          <h3>Cat Playing</h3>
+          <p>Character animation with organic motion curves, squash & stretch, and playful easing.</p>
+          <div class="lottie-tags">
+            <span class="tag tag-pink">Character</span>
+            <span class="tag tag-orange">Organic</span>
+          </div>
+        </div>
+      </div>
+      <div class="lottie-card">
+        <div class="lottie-preview"><div class="lottie-container" id="lottie-loading"></div></div>
+        <div class="lottie-info">
+          <h3>Loading Indicator</h3>
+          <p>Micro-interaction loading spinner with precise timing and Material-inspired motion.</p>
+          <div class="lottie-tags">
+            <span class="tag tag-green">Micro UI</span>
+            <span class="tag tag-purple">Spinner</span>
+          </div>
+        </div>
+      </div>
+      <div class="lottie-card">
+        <div class="lottie-preview"><div class="lottie-container" id="lottie-sample"></div></div>
+        <div class="lottie-info">
+          <h3>Sample Motion</h3>
+          <p>Complex multi-layer animation demonstrating path morphing and synchronized timing.</p>
+          <div class="lottie-tags">
+            <span class="tag tag-orange">Complex</span>
+            <span class="tag tag-pink">Multi-layer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOM ANIMATIONS -->
+  <section id="custom">
+    <div class="section-header">
+      <div class="section-tag">Custom Animations</div>
+      <h2 class="section-title">Hand-Crafted Motion</h2>
+      <p class="section-desc">Pure CSS and JavaScript animations with custom easing, transforms, and keyframe choreography.</p>
+    </div>
+    <div class="custom-grid">
+      <div class="anim-card demo-bounce">
+        <div class="anim-icon" style="background:rgba(124,92,252,0.15)">
+          <span class="material-icons-round" style="color:var(--accent)">arrow_upward</span>
+        </div>
+        <h3>Bounce</h3>
+        <p>Elastic easing with overshoot</p>
+      </div>
+      <div class="anim-card demo-pulse">
+        <div class="anim-icon" style="background:rgba(252,92,140,0.15)">
+          <span class="material-icons-round" style="color:var(--accent2)">favorite</span>
+        </div>
+        <h3>Pulse</h3>
+        <p>Heartbeat scale with glow</p>
+      </div>
+      <div class="anim-card demo-spin">
+        <div class="anim-icon" style="background:rgba(92,252,182,0.15)">
+          <span class="material-icons-round" style="color:var(--accent3)">settings</span>
+        </div>
+        <h3>Spin</h3>
+        <p>Continuous 360° rotation</p>
+      </div>
+      <div class="anim-card demo-shake">
+        <div class="anim-icon" style="background:rgba(252,184,92,0.15)">
+          <span class="material-icons-round" style="color:var(--accent4)">notifications</span>
+        </div>
+        <h3>Shake</h3>
+        <p>Attention-grabbing wobble</p>
+      </div>
+      <div class="anim-card demo-morph">
+        <div class="anim-icon">
+          <span class="material-icons-round" style="color:var(--text)">category</span>
+        </div>
+        <h3>Morph</h3>
+        <p>Shape & color morphing</p>
+      </div>
+      <div class="anim-card demo-flip">
+        <div class="anim-icon" style="background:rgba(124,92,252,0.15)">
+          <span class="material-icons-round" style="color:var(--accent)">flip</span>
+        </div>
+        <h3>3D Flip</h3>
+        <p>Perspective card rotation</p>
+      </div>
+      <div class="anim-card demo-wave">
+        <div class="anim-icon" style="background:rgba(252,92,140,0.15)">
+          <span class="material-icons-round" style="color:var(--accent2)">waving_hand</span>
+        </div>
+        <h3>Wave</h3>
+        <p>Natural waving gesture</p>
+      </div>
+      <div class="anim-card demo-glow">
+        <div class="anim-icon" style="background:rgba(92,252,182,0.15)">
+          <span class="material-icons-round" style="color:var(--accent3)">lightbulb</span>
+        </div>
+        <h3>Neon Glow</h3>
+        <p>Multi-layer box-shadow pulse</p>
+      </div>
+      <div class="anim-card demo-slide">
+        <div class="anim-icon" style="background:rgba(252,184,92,0.15)">
+          <span class="material-icons-round" style="color:var(--accent4)">swap_horiz</span>
+        </div>
+        <h3>Slide & Scale</h3>
+        <p>Combined translate + scale</p>
+      </div>
+      <div class="anim-card demo-stagger">
+        <div class="anim-icon" style="background:rgba(124,92,252,0.1)">
+          <div class="stagger-dots">
+            <div class="stagger-dot"></div>
+            <div class="stagger-dot"></div>
+            <div class="stagger-dot"></div>
+            <div class="stagger-dot"></div>
+          </div>
+        </div>
+        <h3>Stagger</h3>
+        <p>Sequential delay cascade</p>
+      </div>
+      <div class="anim-card demo-typewriter">
+        <div class="anim-icon" style="background:rgba(252,92,140,0.1)">
+          <div class="typewriter-text" id="typewriterText"></div>
+        </div>
+        <h3>Typewriter</h3>
+        <p>Character-by-character reveal</p>
+      </div>
+      <div class="anim-card demo-ripple">
+        <div class="anim-icon" style="background:rgba(92,252,182,0.1)">
+          <div class="ripple-ring"></div>
+          <div class="ripple-ring"></div>
+          <div class="ripple-ring"></div>
+          <span class="material-icons-round" style="color:var(--accent3);position:relative;z-index:1">radio_button_checked</span>
+        </div>
+        <h3>Ripple</h3>
+        <p>Expanding concentric rings</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE PLAYGROUND -->
+  <section id="playground">
+    <div class="section-header">
+      <div class="section-tag">Interactive</div>
+      <h2 class="section-title">Animation Playground</h2>
+      <p class="section-desc">Click the buttons below to apply different animations in real-time. Mix and match to explore motion design.</p>
+    </div>
+    <div class="playground">
+      <div class="playground-demo" id="playgroundBox" onclick="this.style.background = randomGradient()">
+        <span class="material-icons-round" style="color:#fff;font-size:48px">widgets</span>
+      </div>
+      <div class="playground-controls">
+        <button class="ctrl-btn" onclick="setAnimation('play-bounce', this)">Bounce</button>
+        <button class="ctrl-btn" onclick="setAnimation('play-spin', this)">Spin</button>
+        <button class="ctrl-btn" onclick="setAnimation('play-pulse', this)">Pulse</button>
+        <button class="ctrl-btn" onclick="setAnimation('play-wobble', this)">Wobble</button>
+        <button class="ctrl-btn" onclick="setAnimation('play-jello', this)">Jello</button>
+        <button class="ctrl-btn" onclick="setAnimation('play-flip3d', this)">3D Flip</button>
+        <button class="ctrl-btn" onclick="clearAnimation(this)">Stop</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAT BONUS -->
+  <section class="cat-section">
+    <div class="section-header">
+      <div class="section-tag">Bonus</div>
+      <h2 class="section-title">Because Every App Needs a Cat</h2>
+      <p class="section-desc">A playful character animation to brighten the experience.</p>
+    </div>
+    <div class="cat-anim-wrapper">
+      <div class="lottie-container" id="lottie-cat-big"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Built with <span class="heart">&#10084;</span> using Flutter &bull; Dart &bull; Lottie</p>
+  </footer>
+
+  <script>
+    // ─── PARTICLES ───
+    (function createParticles() {
+      const container = document.getElementById('particles');
+      const colors = ['var(--accent)', 'var(--accent2)', 'var(--accent3)', 'var(--accent4)'];
+      for (let i = 0; i < 30; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const size = Math.random() * 4 + 2;
+        p.style.cssText = `
+          width: ${size}px; height: ${size}px;
+          left: ${Math.random() * 100}%;
+          background: ${colors[Math.floor(Math.random() * colors.length)]};
+          animation-duration: ${Math.random() * 15 + 10}s;
+          animation-delay: ${Math.random() * 10}s;
+        `;
+        container.appendChild(p);
+      }
+    })();
+
+    // ─── LOADING SCREEN ───
+    const loadingAnim = lottie.loadAnimation({
+      container: document.getElementById('loading-anim'),
+      path: '/assets/loading.json',
+      renderer: 'svg',
+      loop: true,
+      autoplay: true
+    });
+    setTimeout(() => {
+      document.getElementById('loadingScreen').classList.add('hidden');
+    }, 2500);
+
+    // ─── LOTTIE ANIMATIONS ───
+    const lottieConfigs = [
+      { container: 'hero-bg-anim', path: '/assets/background.json' },
+      { container: 'lottie-bg', path: '/assets/background.json' },
+      { container: 'lottie-cat', path: '/assets/cat.json' },
+      { container: 'lottie-loading', path: '/assets/loading.json' },
+      { container: 'lottie-sample', path: '/assets/sample.json' },
+      { container: 'lottie-cat-big', path: '/assets/cat.json' },
+    ];
+    lottieConfigs.forEach(cfg => {
+      const el = document.getElementById(cfg.container);
+      if (el) {
+        lottie.loadAnimation({
+          container: el,
+          path: cfg.path,
+          renderer: 'svg',
+          loop: true,
+          autoplay: true
+        });
+      }
+    });
+
+    // ─── SCROLL REVEAL ───
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.lottie-card, .anim-card, .stat-item').forEach(el => observer.observe(el));
+
+    // ─── COUNTER ANIMATION ───
+    const countObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.dataset.count);
+          let current = 0;
+          const step = target / 40;
+          const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+              current = target;
+              clearInterval(timer);
+            }
+            el.textContent = Math.floor(current);
+          }, 30);
+          countObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.stat-number').forEach(el => countObserver.observe(el));
+
+    // ─── NAV ACTIVE LINK ───
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        if (window.scrollY >= section.offsetTop - 200) {
+          current = section.id;
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // ─── PLAYGROUND ───
+    const playgroundBox = document.getElementById('playgroundBox');
+    let activeBtn = null;
+    function setAnimation(cls, btn) {
+      playgroundBox.className = 'playground-demo ' + cls;
+      document.querySelectorAll('.ctrl-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeBtn = btn;
+    }
+    function clearAnimation(btn) {
+      playgroundBox.className = 'playground-demo';
+      document.querySelectorAll('.ctrl-btn').forEach(b => b.classList.remove('active'));
+    }
+    function randomGradient() {
+      const colors = ['#7c5cfc','#fc5c8c','#5cfcb6','#fcb85c','#5c8cfc','#fc5cfc'];
+      const c1 = colors[Math.floor(Math.random() * colors.length)];
+      const c2 = colors[Math.floor(Math.random() * colors.length)];
+      return `linear-gradient(135deg, ${c1}, ${c2})`;
+    }
+
+    // ─── TYPEWRITER ───
+    (function typewriter() {
+      const words = ['Flutter', 'Dart', 'Animate', 'Create'];
+      let wordIdx = 0, charIdx = 0, deleting = false;
+      const el = document.getElementById('typewriterText');
+      function tick() {
+        const word = words[wordIdx];
+        el.textContent = word.substring(0, charIdx);
+        if (!deleting) {
+          charIdx++;
+          if (charIdx > word.length) {
+            deleting = true;
+            setTimeout(tick, 1500);
+            return;
+          }
+        } else {
+          charIdx--;
+          if (charIdx < 0) {
+            deleting = false;
+            charIdx = 0;
+            wordIdx = (wordIdx + 1) % words.length;
+          }
+        }
+        setTimeout(tick, deleting ? 60 : 120);
+      }
+      tick();
+    })();
+  </script>
+</body>
+</html>
