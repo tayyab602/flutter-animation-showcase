@@ -846,7 +846,7 @@
   <!-- STATS -->
   <section>
     <div class="stats-bar">
-      <div class="stat-item"><div class="stat-number" data-count="4">0</div><div class="stat-label">Lottie Animations</div></div>
+      <div class="stat-item"><div class="stat-number" data-count="7">0</div><div class="stat-label">Lottie Animations</div></div>
       <div class="stat-item"><div class="stat-number" data-count="12">0</div><div class="stat-label">Custom Animations</div></div>
       <div class="stat-item"><div class="stat-number" data-count="6">0</div><div class="stat-label">Interactive Effects</div></div>
       <div class="stat-item"><div class="stat-number" data-count="60">0</div><div class="stat-label">FPS Smooth</div></div>
@@ -902,6 +902,42 @@
           <div class="lottie-tags">
             <span class="tag tag-orange">Complex</span>
             <span class="tag tag-pink">Multi-layer</span>
+          </div>
+        </div>
+      </div>
+      <div class="lottie-card">
+        <div class="lottie-preview" style="background:linear-gradient(135deg, #0d0221 0%, #150530 100%)"><div class="lottie-container" id="lottie-rocket"></div></div>
+        <div class="lottie-info">
+          <h3>Rocket Launch</h3>
+          <p>Dynamic launch sequence with thrust particles, motion trail, and cinematic text reveal.</p>
+          <div class="lottie-tags">
+            <span class="tag tag-purple">Dynamic</span>
+            <span class="tag tag-orange">Cinematic</span>
+            <span class="tag tag-green">30 FPS</span>
+          </div>
+        </div>
+      </div>
+      <div class="lottie-card">
+        <div class="lottie-preview" style="background:linear-gradient(135deg, #1a0a2e 0%, #0d0221 100%)"><div class="lottie-container" id="lottie-confetti"></div></div>
+        <div class="lottie-info">
+          <h3>Confetti Celebration</h3>
+          <p>Explosive particle burst with randomized rotation, gravity simulation, and color variety.</p>
+          <div class="lottie-tags">
+            <span class="tag tag-pink">Particles</span>
+            <span class="tag tag-green">Physics</span>
+            <span class="tag tag-orange">Burst</span>
+          </div>
+        </div>
+      </div>
+      <div class="lottie-card">
+        <div class="lottie-preview" style="background:linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 100%)"><div class="lottie-container" id="lottie-fireworks"></div></div>
+        <div class="lottie-info">
+          <h3>Fireworks Display</h3>
+          <p>Multi-burst firework animation with staggered timing, light trails, and sparkling effects.</p>
+          <div class="lottie-tags">
+            <span class="tag tag-purple">Staggered</span>
+            <span class="tag tag-pink">Effects</span>
+            <span class="tag tag-green">Ambient</span>
           </div>
         </div>
       </div>
@@ -1105,6 +1141,9 @@
     loadLottie('lottie-loading', '/assets/loading.json');
     loadLottie('lottie-sample', '/assets/sample.json');
     loadLottie('lottie-cat-big', '/assets/cat.json');
+    loadLottie('lottie-rocket', '/assets/rocket.json');
+    loadLottie('lottie-confetti', '/assets/confetti.json');
+    loadLottie('lottie-fireworks', '/assets/galaxy.json');
 
     // ─── SCROLL REVEAL ───
     const observer = new IntersectionObserver((entries) => {

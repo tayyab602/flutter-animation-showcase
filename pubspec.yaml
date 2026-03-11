@@ -24,3 +24,6 @@ flutter:
     - assets/cat.json
     - assets/loading.json
     - assets/sample.json
+    - assets/rocket.json
+    - assets/confetti.json
+    - assets/galaxy.json
