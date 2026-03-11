@@ -20,7 +20,9 @@ A Flutter/Dart animation showcase application featuring multiple Lottie animatio
 ## Features
 - **Loading Screen** - Lottie-powered loading animation on startup
 - **Hero Section** - Animated background with gradient text and scroll indicator
-- **7 Lottie Animations** - Background loop, cat character, loading spinner, sample motion, rocket launch, confetti celebration, fireworks display
+- **10 Lottie Animations** in two sections:
+  - *Lottie Animations* (professor-provided): Background loop, cat character, loading spinner, sample motion
+  - *Custom Lottie Animations*: Confetti celebration, fireworks display, fluid wave, globe visualization, data flow, starfield
 - **12 Custom CSS Animations** - Bounce, Pulse, Spin, Shake, Morph, 3D Flip, Wave, Neon Glow, Slide & Scale, Stagger, Typewriter, Ripple
 - **Interactive Playground** - Real-time animation switcher with 6 effects (Bounce, Spin, Pulse, Wobble, Jello, 3D Flip)
 - **Floating Particles** - Background particle effect

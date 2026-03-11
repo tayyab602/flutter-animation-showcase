@@ -811,6 +811,7 @@
     <ul class="nav-links">
       <li><a href="#hero" class="active">Home</a></li>
       <li><a href="#lottie">Lottie</a></li>
+      <li><a href="#custom-lottie">Custom Lottie</a></li>
       <li><a href="#custom">Custom</a></li>
       <li><a href="#playground">Playground</a></li>
     </ul>
@@ -846,7 +847,7 @@
   <!-- STATS -->
   <section>
     <div class="stats-bar">
-      <div class="stat-item"><div class="stat-number" data-count="7">0</div><div class="stat-label">Lottie Animations</div></div>
+      <div class="stat-item"><div class="stat-number" data-count="10">0</div><div class="stat-label">Lottie Animations</div></div>
       <div class="stat-item"><div class="stat-number" data-count="12">0</div><div class="stat-label">Custom Animations</div></div>
       <div class="stat-item"><div class="stat-number" data-count="6">0</div><div class="stat-label">Interactive Effects</div></div>
       <div class="stat-item"><div class="stat-number" data-count="60">0</div><div class="stat-label">FPS Smooth</div></div>
@@ -905,18 +906,17 @@
           </div>
         </div>
       </div>
-      <div class="lottie-card">
-        <div class="lottie-preview" style="background:linear-gradient(135deg, #0d0221 0%, #150530 100%)"><div class="lottie-container" id="lottie-rocket"></div></div>
-        <div class="lottie-info">
-          <h3>Rocket Launch</h3>
-          <p>Dynamic launch sequence with thrust particles, motion trail, and cinematic text reveal.</p>
-          <div class="lottie-tags">
-            <span class="tag tag-purple">Dynamic</span>
-            <span class="tag tag-orange">Cinematic</span>
-            <span class="tag tag-green">30 FPS</span>
-          </div>
-        </div>
-      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOM LOTTIE ANIMATIONS -->
+  <section id="custom-lottie">
+    <div class="section-header">
+      <div class="section-tag">Custom Lottie Animations</div>
+      <h2 class="section-title">Extended Motion Library</h2>
+      <p class="section-desc">Additional curated Lottie animations showcasing confetti bursts, fireworks effects, wave motion, globe visualization, data flow, and star fields.</p>
+    </div>
+    <div class="lottie-grid">
       <div class="lottie-card">
         <div class="lottie-preview" style="background:linear-gradient(135deg, #1a0a2e 0%, #0d0221 100%)"><div class="lottie-container" id="lottie-confetti"></div></div>
         <div class="lottie-info">
@@ -938,6 +938,54 @@
             <span class="tag tag-purple">Staggered</span>
             <span class="tag tag-pink">Effects</span>
             <span class="tag tag-green">Ambient</span>
+          </div>
+        </div>
+      </div>
+      <div class="lottie-card">
+        <div class="lottie-preview" style="background:linear-gradient(135deg, #0d1b2a 0%, #1b2838 100%)"><div class="lottie-container" id="lottie-wave"></div></div>
+        <div class="lottie-info">
+          <h3>Fluid Wave Motion</h3>
+          <p>Smooth flowing wave animation with layered depth, organic curves, and 60 FPS fluidity.</p>
+          <div class="lottie-tags">
+            <span class="tag tag-purple">Fluid</span>
+            <span class="tag tag-green">60 FPS</span>
+            <span class="tag tag-orange">Organic</span>
+          </div>
+        </div>
+      </div>
+      <div class="lottie-card">
+        <div class="lottie-preview" style="background:linear-gradient(135deg, #0a1628 0%, #162d50 100%)"><div class="lottie-container" id="lottie-globe"></div></div>
+        <div class="lottie-info">
+          <h3>Globe Visualization</h3>
+          <p>Spinning globe with connection points, data paths, and animated network overlays.</p>
+          <div class="lottie-tags">
+            <span class="tag tag-green">Data Viz</span>
+            <span class="tag tag-purple">Network</span>
+            <span class="tag tag-pink">3D Feel</span>
+          </div>
+        </div>
+      </div>
+      <div class="lottie-card">
+        <div class="lottie-preview" style="background:linear-gradient(135deg, #0d0221 0%, #150530 100%)"><div class="lottie-container" id="lottie-data"></div></div>
+        <div class="lottie-info">
+          <h3>Data Flow</h3>
+          <p>Animated data stream visualization with flowing elements, charts, and transition effects.</p>
+          <div class="lottie-tags">
+            <span class="tag tag-orange">Analytics</span>
+            <span class="tag tag-green">Motion</span>
+            <span class="tag tag-purple">Complex</span>
+          </div>
+        </div>
+      </div>
+      <div class="lottie-card">
+        <div class="lottie-preview" style="background:linear-gradient(135deg, #05050f 0%, #0a0a1a 100%)"><div class="lottie-container" id="lottie-stars"></div></div>
+        <div class="lottie-info">
+          <h3>Starfield</h3>
+          <p>Ambient starfield animation with twinkling stars, smooth pulsing, and deep-space atmosphere.</p>
+          <div class="lottie-tags">
+            <span class="tag tag-purple">Ambient</span>
+            <span class="tag tag-pink">Atmospheric</span>
+            <span class="tag tag-green">Loop</span>
           </div>
         </div>
       </div>
@@ -1141,9 +1189,12 @@
     loadLottie('lottie-loading', '/assets/loading.json');
     loadLottie('lottie-sample', '/assets/sample.json');
     loadLottie('lottie-cat-big', '/assets/cat.json');
-    loadLottie('lottie-rocket', '/assets/rocket.json');
     loadLottie('lottie-confetti', '/assets/confetti.json');
     loadLottie('lottie-fireworks', '/assets/galaxy.json');
+    loadLottie('lottie-wave', '/assets/wave_anim.json');
+    loadLottie('lottie-globe', '/assets/globe.json');
+    loadLottie('lottie-data', '/assets/data_anim.json');
+    loadLottie('lottie-stars', '/assets/stars.json');
 
     // ─── SCROLL REVEAL ───
     const observer = new IntersectionObserver((entries) => {

@@ -24,6 +24,9 @@ flutter:
     - assets/cat.json
     - assets/loading.json
     - assets/sample.json
-    - assets/rocket.json
     - assets/confetti.json
     - assets/galaxy.json
+    - assets/wave_anim.json
+    - assets/globe.json
+    - assets/data_anim.json
+    - assets/stars.json
