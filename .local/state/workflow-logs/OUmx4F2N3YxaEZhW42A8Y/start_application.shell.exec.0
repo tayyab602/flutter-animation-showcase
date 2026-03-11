@@ -1,0 +1,7 @@
+Resolving dependencies in `/home/runner/workspace/`... 
+Because animation_showcase depends on flutter_test from sdk which doesn't
+  exist (the Flutter SDK is not available), [1mversion solving failed[0m.
+
+Flutter users should use `flutter pub` instead of `dart pub`.
+
+Animation Showcase server running on http://0.0.0.0:5000
