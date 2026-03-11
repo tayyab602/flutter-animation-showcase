@@ -417,6 +417,135 @@
     .tag-green { background: rgba(92,252,182,0.15); color: var(--accent3); }
     .tag-orange { background: rgba(252,184,92,0.15); color: var(--accent4); }
 
+    .lottie-card { cursor: pointer; }
+
+    /* ─── LOTTIE MODAL ─── */
+    .lottie-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+      padding: 24px;
+    }
+    .lottie-modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .lottie-modal {
+      background: var(--bg-card);
+      border: 1px solid rgba(124,92,252,0.25);
+      border-radius: var(--radius);
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.85) translateY(30px);
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 30px 100px rgba(0,0,0,0.5), 0 0 60px var(--accent-glow);
+    }
+    .lottie-modal-overlay.active .lottie-modal {
+      transform: scale(1) translateY(0);
+    }
+    .lottie-modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.5);
+      color: var(--text);
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: all 0.2s ease;
+    }
+    .lottie-modal-close:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .lottie-modal-preview {
+      position: relative;
+      height: 350px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .lottie-modal-preview::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 50%, var(--bg-card) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .lottie-modal-preview .lottie-container {
+      width: 100%;
+      height: 100%;
+    }
+    .lottie-modal-body {
+      padding: 28px;
+      border-top: 1px solid var(--border);
+    }
+    .lottie-modal-body h2 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--text), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .lottie-modal-body .modal-desc {
+      font-size: 15px;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .lottie-modal-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .modal-detail-item {
+      background: rgba(124,92,252,0.06);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .modal-detail-item .detail-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+    .modal-detail-item .detail-value {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .lottie-modal-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
     /* ─── CUSTOM ANIMATIONS SECTION ─── */
     .custom-grid {
       display: grid;
@@ -862,7 +991,7 @@
       <p class="section-desc">High-fidelity animations rendered in real-time using Lottie, exported from After Effects.</p>
     </div>
     <div class="lottie-grid">
-      <div class="lottie-card">
+      <div class="lottie-card" data-lottie="/assets/background.json" data-title="Hero Background Loop" data-desc="Seamless looping background animation with smooth vector transitions and parallax depth. Uses layered shapes with offset timing to create a sense of depth and continuous flow." data-renderer="SVG" data-type="Looping" data-fps="60" data-format="Lottie JSON">
         <div class="lottie-preview"><div class="lottie-container" id="lottie-bg"></div></div>
         <div class="lottie-info">
           <h3>Hero Background Loop</h3>
@@ -873,7 +1002,7 @@
           </div>
         </div>
       </div>
-      <div class="lottie-card">
+      <div class="lottie-card" data-lottie="/assets/cat.json" data-title="Cat Playing" data-desc="Character animation with organic motion curves, squash &amp; stretch, and playful easing. Features hand-crafted keyframes that mimic natural feline movement with secondary motion on the tail and ears." data-renderer="SVG" data-type="Character" data-fps="30" data-format="Lottie JSON">
         <div class="lottie-preview"><div class="lottie-container" id="lottie-cat"></div></div>
         <div class="lottie-info">
           <h3>Cat Playing</h3>
@@ -884,7 +1013,7 @@
           </div>
         </div>
       </div>
-      <div class="lottie-card">
+      <div class="lottie-card" data-lottie="/assets/loading.json" data-title="Loading Indicator" data-desc="Micro-interaction loading spinner with precise timing and Material-inspired motion. Designed for seamless UI integration with a lightweight file size and infinite loop capability." data-renderer="SVG" data-type="Micro UI" data-fps="60" data-format="Lottie JSON">
         <div class="lottie-preview"><div class="lottie-container" id="lottie-loading"></div></div>
         <div class="lottie-info">
           <h3>Loading Indicator</h3>
@@ -895,7 +1024,7 @@
           </div>
         </div>
       </div>
-      <div class="lottie-card">
+      <div class="lottie-card" data-lottie="/assets/sample.json" data-title="Sample Motion" data-desc="Complex multi-layer animation demonstrating path morphing and synchronized timing. Combines shape layers, trim paths, and opacity transitions to create a polished motion graphic." data-renderer="SVG" data-type="Complex" data-fps="30" data-format="Lottie JSON">
         <div class="lottie-preview"><div class="lottie-container" id="lottie-sample"></div></div>
         <div class="lottie-info">
           <h3>Sample Motion</h3>
@@ -917,7 +1046,7 @@
       <p class="section-desc">Additional curated Lottie animations showcasing confetti bursts, fireworks effects, wave motion, globe visualization, data flow, and star fields.</p>
     </div>
     <div class="lottie-grid">
-      <div class="lottie-card">
+      <div class="lottie-card" data-lottie="/assets/confetti.json" data-title="Confetti Celebration" data-desc="Explosive particle burst with randomized rotation, gravity simulation, and color variety. Each particle follows a unique bezier curve path with independent rotation and scale animations." data-renderer="SVG" data-type="Particles" data-fps="30" data-format="Lottie JSON">
         <div class="lottie-preview" style="background:linear-gradient(135deg, #1a0a2e 0%, #0d0221 100%)"><div class="lottie-container" id="lottie-confetti"></div></div>
         <div class="lottie-info">
           <h3>Confetti Celebration</h3>
@@ -929,7 +1058,7 @@
           </div>
         </div>
       </div>
-      <div class="lottie-card">
+      <div class="lottie-card" data-lottie="/assets/galaxy.json" data-title="Fireworks Display" data-desc="Multi-burst firework animation with staggered timing, light trails, and sparkling effects. Features radial burst patterns with independently timed explosions and fade-out trails." data-renderer="SVG" data-type="Effects" data-fps="30" data-format="Lottie JSON">
         <div class="lottie-preview" style="background:linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 100%)"><div class="lottie-container" id="lottie-fireworks"></div></div>
         <div class="lottie-info">
           <h3>Fireworks Display</h3>
@@ -941,7 +1070,7 @@
           </div>
         </div>
       </div>
-      <div class="lottie-card">
+      <div class="lottie-card" data-lottie="/assets/wave_anim.json" data-title="Fluid Wave Motion" data-desc="Smooth flowing wave animation with layered depth, organic curves, and 60 FPS fluidity. Multiple wave layers create parallax-like depth with independent speed and amplitude." data-renderer="SVG" data-type="Fluid" data-fps="60" data-format="Lottie JSON">
         <div class="lottie-preview" style="background:linear-gradient(135deg, #0d1b2a 0%, #1b2838 100%)"><div class="lottie-container" id="lottie-wave"></div></div>
         <div class="lottie-info">
           <h3>Fluid Wave Motion</h3>
@@ -953,7 +1082,7 @@
           </div>
         </div>
       </div>
-      <div class="lottie-card">
+      <div class="lottie-card" data-lottie="/assets/globe.json" data-title="Globe Visualization" data-desc="Spinning globe with connection points, data paths, and animated network overlays. Demonstrates complex shape layer orchestration with rotational transforms and arc paths." data-renderer="SVG" data-type="Data Viz" data-fps="30" data-format="Lottie JSON">
         <div class="lottie-preview" style="background:linear-gradient(135deg, #0a1628 0%, #162d50 100%)"><div class="lottie-container" id="lottie-globe"></div></div>
         <div class="lottie-info">
           <h3>Globe Visualization</h3>
@@ -965,7 +1094,7 @@
           </div>
         </div>
       </div>
-      <div class="lottie-card">
+      <div class="lottie-card" data-lottie="/assets/data_anim.json" data-title="Data Flow" data-desc="Animated data stream visualization with flowing elements, charts, and transition effects. Combines bar charts, line graphs, and numeric counters into a cohesive data dashboard animation." data-renderer="SVG" data-type="Analytics" data-fps="30" data-format="Lottie JSON">
         <div class="lottie-preview" style="background:linear-gradient(135deg, #0d0221 0%, #150530 100%)"><div class="lottie-container" id="lottie-data"></div></div>
         <div class="lottie-info">
           <h3>Data Flow</h3>
@@ -977,7 +1106,7 @@
           </div>
         </div>
       </div>
-      <div class="lottie-card">
+      <div class="lottie-card" data-lottie="/assets/stars.json" data-title="Starfield" data-desc="Ambient starfield animation with twinkling stars, smooth pulsing, and deep-space atmosphere. Uses randomized opacity keyframes across dozens of layers for an organic, endless feel." data-renderer="SVG" data-type="Ambient" data-fps="30" data-format="Lottie JSON">
         <div class="lottie-preview" style="background:linear-gradient(135deg, #05050f 0%, #0a0a1a 100%)"><div class="lottie-container" id="lottie-stars"></div></div>
         <div class="lottie-info">
           <h3>Starfield</h3>
@@ -1130,6 +1259,39 @@
     </div>
   </section>
 
+  <!-- LOTTIE MODAL -->
+  <div class="lottie-modal-overlay" id="lottieModalOverlay">
+    <div class="lottie-modal">
+      <div class="lottie-modal-preview">
+        <button class="lottie-modal-close" id="modalCloseBtn">&times;</button>
+        <div class="lottie-container" id="modalLottieContainer"></div>
+      </div>
+      <div class="lottie-modal-body">
+        <h2 id="modalTitle"></h2>
+        <p class="modal-desc" id="modalDesc"></p>
+        <div class="lottie-modal-details">
+          <div class="modal-detail-item">
+            <div class="detail-label">Renderer</div>
+            <div class="detail-value" id="modalRenderer"></div>
+          </div>
+          <div class="modal-detail-item">
+            <div class="detail-label">Type</div>
+            <div class="detail-value" id="modalType"></div>
+          </div>
+          <div class="modal-detail-item">
+            <div class="detail-label">Frame Rate</div>
+            <div class="detail-value" id="modalFps"></div>
+          </div>
+          <div class="modal-detail-item">
+            <div class="detail-label">Format</div>
+            <div class="detail-value" id="modalFormat"></div>
+          </div>
+        </div>
+        <div class="lottie-modal-tags" id="modalTags"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer>
     <p>Built with <span class="heart">&#10084;</span> using Flutter &bull; Dart &bull; Lottie</p>
@@ -1265,6 +1427,88 @@
       const c2 = colors[Math.floor(Math.random() * colors.length)];
       return `linear-gradient(135deg, ${c1}, ${c2})`;
     }
+
+    // ─── LOTTIE MODAL ───
+    const modalOverlay = document.getElementById('lottieModalOverlay');
+    const modalPreview = document.getElementById('modalLottieContainer');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalRenderer = document.getElementById('modalRenderer');
+    const modalType = document.getElementById('modalType');
+    const modalFps = document.getElementById('modalFps');
+    const modalFormat = document.getElementById('modalFormat');
+    const modalTags = document.getElementById('modalTags');
+    let modalAnim = null;
+
+    function openLottieModal(card) {
+      const lottiePath = card.dataset.lottie;
+      const title = card.dataset.title;
+      const desc = card.dataset.desc;
+      const renderer = card.dataset.renderer;
+      const type = card.dataset.type;
+      const fps = card.dataset.fps;
+      const format = card.dataset.format;
+      const bgStyle = card.querySelector('.lottie-preview').getAttribute('style') || '';
+      const tagsHtml = card.querySelector('.lottie-tags').innerHTML;
+
+      modalTitle.textContent = title;
+      modalDesc.textContent = desc;
+      modalRenderer.textContent = renderer;
+      modalType.textContent = type;
+      modalFps.textContent = fps + ' FPS';
+      modalFormat.textContent = format;
+      modalTags.innerHTML = tagsHtml;
+
+      const previewEl = document.querySelector('.lottie-modal-preview');
+      previewEl.setAttribute('style', bgStyle);
+
+      if (modalAnim) {
+        modalAnim.destroy();
+        modalAnim = null;
+      }
+      modalPreview.innerHTML = '';
+
+      try {
+        if (typeof lottie !== 'undefined') {
+          modalAnim = lottie.loadAnimation({
+            container: modalPreview,
+            path: lottiePath,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true
+          });
+        }
+      } catch (e) {
+        console.warn('Modal lottie failed', e);
+      }
+
+      modalOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLottieModal() {
+      modalOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+      if (modalAnim) {
+        modalAnim.destroy();
+        modalAnim = null;
+      }
+      modalPreview.innerHTML = '';
+    }
+
+    document.querySelectorAll('.lottie-card[data-lottie]').forEach(card => {
+      card.addEventListener('click', () => openLottieModal(card));
+    });
+
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) closeLottieModal();
+    });
+
+    document.getElementById('modalCloseBtn').addEventListener('click', closeLottieModal);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLottieModal();
+    });
 
     // ─── TYPEWRITER ───
     (function typewriter() {
